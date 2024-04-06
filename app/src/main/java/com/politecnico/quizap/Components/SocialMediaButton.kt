@@ -1,6 +1,7 @@
 package com.politecnico.quizap.Components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -21,8 +23,7 @@ fun SocialMediaButton(
     socialMediaColor: Color
 ) {
     OutlinedButton(
-        modifier = Modifier
-            .width(280.dp)
+        modifier = Modifier.fillMaxWidth()
             .height(50.dp),
         onClick = onClick,
         shape = RoundedCornerShape(50),
@@ -30,12 +31,13 @@ fun SocialMediaButton(
             contentColor = socialMediaColor
         ),
         border = BorderStroke(
-            width = (1.5).dp,
+            width = (2.5).dp,
             color = socialMediaColor
         )
     ) {
         Text(
             text = text,
+            fontWeight = FontWeight.ExtraBold,
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = socialMediaColor
             )

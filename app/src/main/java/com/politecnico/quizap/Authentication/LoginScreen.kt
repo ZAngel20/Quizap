@@ -200,8 +200,7 @@ fun LoginScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(25.dp))
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
 
@@ -233,7 +232,6 @@ fun LoginScreen(navController: NavController) {
                         navController.navigate(route = AppScreens.RegistrationScreen.route)
                     }
                 }
-
             }
         }
     }
