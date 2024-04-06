@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.SplashScreen
-import com.politecnico.quizap.navigation.AppScreens
 
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -28,20 +27,7 @@ fun AppNavigation() {
         composable(route = AppScreens.SecondScreen.route) {
             SecondScreen(navController = navController)
         }
-        
-        composable(route = AppScreens.FirstScreen.route) {
-            MySootheApp(windowSize = windowSizeClass, navController = navController)
-        }
 
-        composable(route = AppScreens.RegistrationScreen.route) {
-            RegistrationScreen(navController = navController)
-        }
-        composable(route = AppScreens.ReservaForm.route) {
-            ReservationForm(navController = navController)
-        }
-        composable(route = AppScreens.CarouselScreen.route) {
-            CarouselScreen(navController = navController)
-        }
         composable(
                 route = AppScreensReserva.ReservaList.route
             ){

@@ -13,9 +13,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavHostController
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(navController: NavHostController) {
     val colors = listOf(Color(0xFF0CADC1), Color(0xFFB85DE3)) // Colores de inicio y final
     val brush = Brush.verticalGradient(colors)
 
