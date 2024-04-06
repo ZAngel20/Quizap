@@ -13,7 +13,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.codelab.basiclayouts.Authentication.LoginScreen
+import com.politecnico.quizap.ui.theme.QuizapTheme
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
@@ -32,5 +36,13 @@ fun SplashScreen(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth(0.5f).fillMaxHeight(0.5f),
             contentScale = ContentScale.Fit
         )
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun SplashScreenPreview() {
+    val navController = rememberNavController()
+    QuizapTheme {
+        SplashScreen(navController = navController)
     }
 }
