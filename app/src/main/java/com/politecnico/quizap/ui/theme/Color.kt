@@ -8,6 +8,9 @@ val PurpleHardGradient = Color(0xFFB85DE3)
 val BlueDarkGradient = Color(0xFF127489)
 val PurpleDarkGradient = Color(0xFF6E2289)
 
+val MenuSelected = Color(0xFFC46DED)
+val MenuIconTint = Color(0xFF9211CF)
+
 val TextInside = Color(0xFF4472c0)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)

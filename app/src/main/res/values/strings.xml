@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Quizap</string>
+    <string name="bottom_navigation_home">Home</string>
+    <string name="top_navigation_profile">Perfil</string>
+    <string name="top_navigation_shop">Shop</string>
+    <string name="bottom_navigation_categories">Categorías</string>
+    <string name="bottom_navigation_ranking">Ranking</string>
 </resources>
