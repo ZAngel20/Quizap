@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quizap</string>
+    <string name="tutorial_1_title">¡Welcome to Quizap!</string>
+    <string name="tutorial_1_content">On Quizap, we will test your knowledge in a wide variety of categories while you have fun.On Quizap, we will test your knowledge in a wide variety of categories while you have fun.</string>
+    <string name="tutorial_1_end">Before you start, here is a brief explanation of how the game works and some important rules to keep in mind:Before you start, here is a brief explanation of how the game works and some important rules to keep in mind:</string>
+    <string name="tutorial_2_title">" 1. Select a Category:"</string>
+    <string name="tutorial_2_content">On the home page, you will find a list of categories available to play.</string>
+    <string name="tutorial_2_end">From science to film, choose the category that interests you most and get ready to answer challenging questions.</string>
+    <string name="tutorial_3_title">2. Answer Questions</string>
+    <string name="tutorial_3_content">Once you\'ve selected a category, we\'ll present you with a series of related questions.</string>
+    <string name="tutorial_3_end">Read each question carefully and choose the correct answer from the options provided.</string>
+    <string name="tutorial_4_title">" 3. Earn Points:"</string>
+    <string name="tutorial_4_content">Each correct answer will earn you points!</string>
+    <string name="tutorial_4_end">Challenge your friends and climb the leaderboard to show who is the best!</string>
+    <string name="tutorial_5_title">4. Have fun</string>
+    <string name="tutorial_5_content">" Last but not least, have fun!"</string>
+    <string name="tutorial_5_end">Quizap is designed to offer a fun and challenging experience for all trivia lovers.</string>
+    <string name="tutorial_6_title">¿HOW TO PLAY?</string>
+    <string name="tutorial_6_content">You will have to answer the question that will appear at the top of the screen by clicking on one of the answers,</string>
+    <string name="tutorial_6_end">The time limit will be calculated below, if the bar is full it will count as a failure and the answers will be shown, in red those that are not correct and in green those that are correct.</string>
+
+    <string name="howtoplay">How to play</string>
+    <string name="play">Play</string>
+
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgotPassword">¿Forgot Password?</string>
+    <string name="or">OR</string>
+    <string name="login">Log In</string>
+    <string name="register">Register</string>
+    <string name="rpassword">Repeat Password</string>
+    <string name="phone">Phone</string>
+
+    <string name="noaccount">¿You do not have an account?</string>
+    <string name="registernow">Register Now</string>
+
+    <string name="google">Log in with google</string>
+
+    <string name="bottom_navigation_home">Home</string>
+    <string name="top_navigation_profile">Profile</string>
+    <string name="top_navigation_shop">Shop</string>
+    <string name="bottom_navigation_categories">Categories</string>
+    <string name="bottom_navigation_ranking">Ranking</string>
+</resources>

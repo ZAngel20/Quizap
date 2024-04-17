@@ -37,6 +37,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -102,7 +104,7 @@ fun LoginScreen(navController: NavController) {
                 ) {
                     LoginTextField(
                         textFieldValue = emailValue,
-                        textLabel = "Correo",
+                        textLabel = stringResource(id = R.string.email),
                         keyboardType = KeyboardType.Email,
                         keyboardActions = KeyboardActions(
                             onNext = {
@@ -114,7 +116,7 @@ fun LoginScreen(navController: NavController) {
 
                     LoginTextField(
                         textFieldValue = passwordValue,
-                        textLabel = "Contraseña",
+                        textLabel = stringResource(id = R.string.password),
                         keyboardType = KeyboardType.Password,
                         keyboardActions = KeyboardActions(
                             onDone = {
@@ -153,7 +155,7 @@ fun LoginScreen(navController: NavController) {
                 Text(
                     modifier = Modifier.padding(horizontal = 10.dp),
                     color = Color.White,
-                    text = "¿Has olvidado la contraseña?",
+                    text = stringResource(id = R.string.forgotPassword),
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.End
                 )
@@ -162,9 +164,10 @@ fun LoginScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 15.dp),
-                    text = "Entrar",
+                    text = stringResource(id = R.string.login),
                     displayProgressBar = false,
                     onClick = {
+                        navController.navigate(route = AppScreens.TutorialScreen.route)
                         /*if (emailValue.value.isNotEmpty() && passwordValue.value.isNotEmpty()) {
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(
                                 emailValue.value,
@@ -191,7 +194,7 @@ fun LoginScreen(navController: NavController) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Divider(color = Color.White, modifier = Modifier.weight(1f).padding(start = 10.dp ))
                     Text(
-                        text = "OR",
+                        text = stringResource(id = R.string.or),
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(horizontal = 8.dp)
@@ -205,7 +208,7 @@ fun LoginScreen(navController: NavController) {
                 ){
 
                     SocialMediaButton(
-                        text = "Inicia sesión con Google",
+                        text = stringResource(id = R.string.google),
                         onClick = { },
                         socialMediaColor = GMAILCOLOR
                     )
@@ -218,14 +221,16 @@ fun LoginScreen(navController: NavController) {
                     ClickableText(
                         modifier = Modifier.padding(horizontal = 10.dp, vertical = 20.dp),
                         text = buildAnnotatedString {
-                            append("¿No tienes cuenta aún? ")
+                            append(stringResource(id = R.string.noaccount))
 
                             withStyle(
                                 style = SpanStyle(
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    textDecoration = TextDecoration.Underline
+
                                 )
                             ) {
-                                append("Regístrate")
+                                append(stringResource(id = R.string.registernow))
                             }
                         }
                     ) {

@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -117,7 +118,7 @@ fun RegistrationScreen(navController: NavController) {
                 )*/
                 LoginTextField(
                     textFieldValue = nameValue,
-                    textLabel = "Nombre",
+                    textLabel = stringResource(id = R.string.name),
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -129,7 +130,7 @@ fun RegistrationScreen(navController: NavController) {
 
                 LoginTextField(
                     textFieldValue = emailValue,
-                    textLabel = "Correo",
+                    textLabel = stringResource(id = R.string.email),
                     keyboardType = KeyboardType.Email,
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -139,7 +140,7 @@ fun RegistrationScreen(navController: NavController) {
 
                 LoginTextField(
                     textFieldValue = phoneValue,
-                    textLabel = "Numero de telefono",
+                    textLabel = stringResource(id = R.string.phone),
                     maxChar = 10,
                     keyboardType = KeyboardType.Phone,
                     keyboardActions = KeyboardActions(
@@ -150,7 +151,7 @@ fun RegistrationScreen(navController: NavController) {
 
                 LoginTextField(
                     textFieldValue = passwordValue,
-                    textLabel = "Contraseña",
+                    textLabel = stringResource(id = R.string.password),
                     keyboardType = KeyboardType.Password,
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -175,7 +176,7 @@ fun RegistrationScreen(navController: NavController) {
 
                 LoginTextField(
                     textFieldValue = confirmPasswordValue,
-                    textLabel = "Confirmar Contraseña",
+                    textLabel = stringResource(id = R.string.rpassword ),
                     keyboardType = KeyboardType.Password,
                     keyboardActions = KeyboardActions(
                         onDone = {
@@ -201,7 +202,7 @@ fun RegistrationScreen(navController: NavController) {
                 RoundedButton(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = "Registrate",
+                    text = stringResource(id = R.string.registernow),
                     displayProgressBar = false,
                     onClick = {
                         /*if (emailValue.value.isNotEmpty() && passwordValue.value.isNotEmpty()) {
@@ -246,6 +247,28 @@ fun RegistrationScreen(navController: NavController) {
                         navController.navigate(route = AppScreens.LoginScreen.route)
                     }
                 )*/
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Divider(color = Color.White, modifier = Modifier.weight(1f).padding(start = 10.dp ))
+                    Text(
+                        text = stringResource(id = R.string.or),
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    Divider(color = Color.White, modifier = Modifier.weight(1f).padding(end = 10.dp ))
+                }
+                Spacer(modifier = Modifier.height(5.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+
+                    SocialMediaButton(
+                        text = stringResource(id = R.string.google),
+                        onClick = { },
+                        socialMediaColor = GMAILCOLOR
+                    )
+                }
             }
 
             /*
@@ -302,6 +325,7 @@ fun RegistrationScreen(navController: NavController) {
             }*/
 
         }
+
 
 
     }
