@@ -51,6 +51,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
@@ -63,6 +64,11 @@ dependencies {
     implementation ("androidx.compose.material3:material3-window-size-class:1.1.2")
 
     implementation ("androidx.compose.material:material-icons-extended")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.3")
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
 
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")

@@ -5,14 +5,14 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.codelab.basiclayouts.Authentication.LoginScreen
 import com.politecnico.quizap.Authentication.RegistrationScreen
+import com.politecnico.quizap.CategoriesScreen
 import com.politecnico.quizap.HomeScreen
-import com.politecnico.quizap.SplashScreen
+import com.politecnico.quizap.ProfileScreen
 import com.politecnico.quizap.Tutorial.TutoScreen
 
 
@@ -27,6 +27,9 @@ fun AppNavigation() {
             composable(route = AppScreens.LoginScreen.route) {
                 LoginScreen(navController = navController)
             }
+            composable(route = AppScreens.ForgotPassword.route) {
+                LoginScreen(navController = navController)
+            }
             composable(route = AppScreens.TutorialScreen.route) {
                 TutoScreen(navController = navController)
             }
@@ -35,6 +38,12 @@ fun AppNavigation() {
             }
             composable(route = AppScreens.MainScreen.route) {
                 HomeScreen(navController = navController)
+            }
+            composable(route = AppScreens.CategoriesScreen.route) {
+                CategoriesScreen(navController = navController)
+            }
+            composable(route = AppScreens.ProfileScreen.route) {
+                ProfileScreen(navController = navController)
             }
         }
     }

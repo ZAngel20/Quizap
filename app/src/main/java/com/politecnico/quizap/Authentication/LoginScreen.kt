@@ -1,40 +1,39 @@
 package com.codelab.basiclayouts.Authentication
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.magnifier
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Divider
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,11 +53,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.Components.LoginTextField
 import com.politecnico.quizap.Components.RoundedButton
-import com.politecnico.quizap.Components.SocialMediaButton
-import com.politecnico.quizap.Components.TransparentTextField
 import com.politecnico.quizap.R
+import com.politecnico.quizap.data.PreferenceHelper
 import com.politecnico.quizap.navigation.AppScreens
-import com.politecnico.quizap.ui.theme.GMAILCOLOR
 import com.politecnico.quizap.ui.theme.QuizapTheme
 
 @Composable
@@ -69,6 +66,10 @@ fun LoginScreen(navController: NavController) {
     val passwordValue = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    var tutorialStatus by remember { mutableStateOf(PreferenceHelper.getTutorialStatus(context)) }
+    var message by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
@@ -83,7 +84,7 @@ fun LoginScreen(navController: NavController) {
                 /*verticalArrangement = Arrangement.SpaceEvenly*/
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_logogris),
+                    painter = painterResource(id = R.drawable.ic_logo),
                     contentDescription = "Login Image",
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier
@@ -167,7 +168,13 @@ fun LoginScreen(navController: NavController) {
                     text = stringResource(id = R.string.login),
                     displayProgressBar = false,
                     onClick = {
-                        navController.navigate(route = AppScreens.TutorialScreen.route)
+
+
+                        if (tutorialStatus >= 6) {
+                            navController.navigate(route = AppScreens.CategoriesScreen.route)
+                        } else {
+                            navController.navigate(route = AppScreens.TutorialScreen.route)
+                        }
                         /*if (emailValue.value.isNotEmpty() && passwordValue.value.isNotEmpty()) {
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(
                                 emailValue.value,
@@ -191,6 +198,7 @@ fun LoginScreen(navController: NavController) {
                         }*/
                     }
                 )
+                /*
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Divider(color = Color.White, modifier = Modifier.weight(1f).padding(start = 10.dp ))
                     Text(
@@ -209,11 +217,11 @@ fun LoginScreen(navController: NavController) {
 
                     SocialMediaButton(
                         text = stringResource(id = R.string.google),
-                        onClick = { },
+                        onClick = {navController.navigate(route = AppScreens.CategoriesScreen.route)},
                         socialMediaColor = GMAILCOLOR
                     )
                 }
-
+                */
 
                 Box(modifier = Modifier
                     .fillMaxSize(),

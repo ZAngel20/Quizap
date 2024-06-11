@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -37,110 +38,121 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.R
 import com.politecnico.quizap.TopNavigation
+import com.politecnico.quizap.data.PreferenceHelper
+import com.politecnico.quizap.navigation.AppScreens
 import com.politecnico.quizap.ui.theme.QuizapTheme
 
 @Composable
 fun TutoScreen(modifier: Modifier = Modifier, navController: NavController) {
 
+    val context = LocalContext.current
+    var tutorialStatus by remember { mutableStateOf(PreferenceHelper.getTutorialStatus(context)) }
     var tutorial by remember { mutableStateOf(1) }
-
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        TopNavigation(modifier = modifier, navController = navController, tutorial = tutorial)
-        ProvideTextStyle(TextStyle(color = Color.White)) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            listOf(
-                                Color(0xFF127489),
-                                Color(0xFF6E2289)
-                            )
-                        )
-                    ),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                Column(modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-
-                ) {
-
-
-                Text(
-                    modifier = Modifier.padding(top = 20.dp, start = 10.dp, end = 10.dp),
-                    fontSize = 25.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.ExtraBold,
-                    text = stringResource(id = getResourceIdForTutorialTitle(tutorial))
-                )
-                Text(
-                    modifier = Modifier.padding(top = 20.dp, start = 10.dp, end = 10.dp),
-                    fontSize = 25.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.ExtraBold,
-                    text = stringResource(id = getResourceIdForTutorialContent(tutorial))
-                )
-                    Text(
-                        modifier = Modifier.padding(top = 20.dp, start = 10.dp, end = 10.dp),
-                        fontSize = 25.sp,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.ExtraBold,
-                        text = stringResource(id = getResourceIdForTutorialEnd(tutorial))
-                    )
-                }
-                Row(
+    if (tutorialStatus == 7) {
+        navController.navigate(route = AppScreens.CategoriesScreen.route)
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            TopNavigation(modifier = modifier, navController = navController, tutorial = tutorial)
+            ProvideTextStyle(TextStyle(color = Color.White)) {
+                Box(
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 50.dp)
-                ) {
-                    if (tutorial == 6) {
-                        Button(
-                            onClick = {
-                                    tutorial++
-                            }
-                        ) {
-                            Text(text = stringResource(id = R.string.play))
-                        } 
-                    } else {
-                        FloatingActionButton(
-                            onClick = {
-                                if (tutorial > 1) {
-                                    tutorial--
-                                }
-                            },
-                            content = {
-                                Icon(
-                                    Icons.Default.ArrowBack,
-                                    contentDescription = "Atrás"
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                listOf(
+                                    Color(0xFF127489),
+                                    Color(0xFF6E2289)
                                 )
-                            }
+                            )
+                        ),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+
+                    ) {
+
+
+                        Text(
+                            modifier = Modifier.padding(top = 20.dp, start = 10.dp, end = 10.dp),
+                            fontSize = 25.sp,
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.ExtraBold,
+                            text = stringResource(id = getResourceIdForTutorialTitle(tutorial))
                         )
-                        Spacer(modifier = Modifier.width(30.dp))
-                        if (tutorial == 5) {
+                        Text(
+                            modifier = Modifier.padding(top = 20.dp, start = 10.dp, end = 10.dp),
+                            fontSize = 25.sp,
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.ExtraBold,
+                            text = stringResource(id = getResourceIdForTutorialContent(tutorial))
+                        )
+                        Text(
+                            modifier = Modifier.padding(top = 20.dp, start = 10.dp, end = 10.dp),
+                            fontSize = 25.sp,
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.ExtraBold,
+                            text = stringResource(id = getResourceIdForTutorialEnd(tutorial))
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 50.dp)
+                    ) {
+                        if (tutorial == 6) {
                             Button(
                                 onClick = {
-                                    tutorial++
+                                    navController.navigate(route = AppScreens.CategoriesScreen.route)
                                 }
                             ) {
-                                Text(text = stringResource(id = R.string.howtoplay))
+                                Text(text = stringResource(id = R.string.play))
                             }
-                        }
-                        if (tutorial < 5) {
-
+                        } else {
                             FloatingActionButton(
                                 onClick = {
-                                        tutorial++
+                                    if (tutorial > 1) {
+                                        tutorial--
+                                        PreferenceHelper.setTutorialStatus(context, tutorial)
+                                    }
                                 },
                                 content = {
                                     Icon(
-                                        Icons.Default.ArrowForward,
-                                        contentDescription = "Siguiente"
+                                        Icons.Default.ArrowBack,
+                                        contentDescription = "Atrás"
                                     )
                                 }
                             )
+                            Spacer(modifier = Modifier.width(30.dp))
+                            if (tutorial == 5) {
+                                Button(
+                                    onClick = {
+                                        tutorial++
+                                        PreferenceHelper.setTutorialStatus(context, tutorial)
+                                    }
+                                ) {
+                                    Text(text = stringResource(id = R.string.howtoplay))
+                                }
+                            }
+                            if (tutorial < 5) {
+
+                                FloatingActionButton(
+                                    onClick = {
+                                        tutorial++
+                                        PreferenceHelper.setTutorialStatus(context, tutorial)
+                                    },
+                                    content = {
+                                        Icon(
+                                            Icons.Default.ArrowForward,
+                                            contentDescription = "Siguiente"
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                 }

@@ -3,9 +3,9 @@ package com.politecnico.quizap.Components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,8 +23,11 @@ fun RoundedButton(
 ) {
     if(!displayProgressBar) {
         Button(
-            modifier = modifier.fillMaxWidth().height(50.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .height(50.dp),
             onClick = onClick,
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8441A4)),
             shape = RoundedCornerShape(35),
         ) {
             Text(

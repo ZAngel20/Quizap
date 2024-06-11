@@ -27,6 +27,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgotPassword">¿Forgot Password?</string>
+    <string name="youforgot">Write the email to which you want to recover password</string>
+    <string name="recover">Recover password</string>
     <string name="or">OR</string>
     <string name="login">Log In</string>
     <string name="register">Register</string>
