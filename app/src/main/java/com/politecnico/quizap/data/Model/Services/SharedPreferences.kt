@@ -1,4 +1,4 @@
-package com.politecnico.quizap.data
+package com.politecnico.quizap.data.Model.Services
 
 import android.content.Context
 

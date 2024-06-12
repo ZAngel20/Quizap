@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.R
-import com.politecnico.quizap.TopNavigation
-import com.politecnico.quizap.data.PreferenceHelper
+import com.politecnico.quizap.Views.TopNavigation
+import com.politecnico.quizap.data.Model.Services.PreferenceHelper
 import com.politecnico.quizap.navigation.AppScreens
 import com.politecnico.quizap.ui.theme.QuizapTheme
 

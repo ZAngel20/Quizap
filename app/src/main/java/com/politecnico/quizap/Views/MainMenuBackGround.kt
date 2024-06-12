@@ -1,4 +1,4 @@
-package com.politecnico.quizap
+package com.politecnico.quizap.Views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.politecnico.quizap.R
 import com.politecnico.quizap.navigation.AppScreens
 import com.politecnico.quizap.ui.theme.QuizapTheme
 @Composable

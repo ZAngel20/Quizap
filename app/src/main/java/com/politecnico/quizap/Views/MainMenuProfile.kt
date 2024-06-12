@@ -1,4 +1,4 @@
-package com.politecnico.quizap
+package com.politecnico.quizap.Views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +51,12 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                 .background(brush),
             contentAlignment = Alignment.Center
         ) {
-            val viewModel = remember { ProfileScreenViewModel() }
+            val profileScreenViewModel = ProfileScreenViewModel.getInstance()
+            val viewModel = remember { profileScreenViewModel }
+            val name by viewModel.username.observeAsState(initial = "???")
+            val email by viewModel.email.observeAsState(initial = "???")
+            val score by viewModel.score.observeAsState(initial = 0)
+            val ranking by viewModel.ranking.observeAsState(initial = null)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -72,7 +79,7 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                             color = Color.White
                         )
                         Text(
-                            text = viewModel.username,
+                            text =  name,
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )
@@ -95,7 +102,7 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                             color = Color.White
                         )
                         Text(
-                            text = formatEmail(viewModel.email),
+                            text = formatEmail(email),
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )
@@ -129,7 +136,7 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                         color = Color.White
                     )
                     Text(
-                        text = "${viewModel.score}",
+                        text = "${score}",
                         style = MaterialTheme.typography.titleLarge,
                         color = Color.White
                     )
@@ -153,7 +160,7 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                         color = Color.White
                     )
                     Text(
-                        text = if (viewModel.ranking!= null) "Ranking: ${viewModel.ranking}" else "No estás en el ranking",
+                        text = if (ranking != null) "${ranking}" else "No estás en el ranking",
                         style = MaterialTheme.typography.titleSmall,
                         color = Color.White
                     )
@@ -207,6 +214,9 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
     }
 }
 fun formatEmail(email: String): String {
+    if (email.equals("???")) {
+        return "???"
+    }
     val localPart = email.substringBefore("@")
     val domain = email.substringAfter("@")
     return "${localPart.take(3)}***@$domain"

@@ -1,5 +1,6 @@
-package com.codelab.basiclayouts.Authentication
+package com.politecnico.quizap.Authentication
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -54,9 +55,14 @@ import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.Components.LoginTextField
 import com.politecnico.quizap.Components.RoundedButton
 import com.politecnico.quizap.R
-import com.politecnico.quizap.data.PreferenceHelper
+import com.politecnico.quizap.data.Model.API.MiAPI
+import com.politecnico.quizap.data.Model.Services.PreferenceHelper
+import com.politecnico.quizap.data.Model.UserAccessToken
+import com.politecnico.quizap.data.Model.UserLogin
+import com.politecnico.quizap.data.Model.UserRepository
 import com.politecnico.quizap.navigation.AppScreens
 import com.politecnico.quizap.ui.theme.QuizapTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -68,9 +74,8 @@ fun LoginScreen(navController: NavController) {
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     var tutorialStatus by remember { mutableStateOf(PreferenceHelper.getTutorialStatus(context)) }
-    var message by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
-
+    var eMessage = remember { mutableStateOf("") }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -153,13 +158,22 @@ fun LoginScreen(navController: NavController) {
             }
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Text(
+                ClickableText(
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    color = Color.White,
-                    text = stringResource(id = R.string.forgotPassword),
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.End
-                )
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                textDecoration = TextDecoration.Underline
+                                )
+                            ){
+                        append(stringResource(id = R.string.forgotPassword))
+                            }
+                    }) {
+
+                        }
 
                 RoundedButton(
                     modifier = Modifier
@@ -168,13 +182,59 @@ fun LoginScreen(navController: NavController) {
                     text = stringResource(id = R.string.login),
                     displayProgressBar = false,
                     onClick = {
-
-
-                        if (tutorialStatus >= 6) {
-                            navController.navigate(route = AppScreens.CategoriesScreen.route)
-                        } else {
-                            navController.navigate(route = AppScreens.TutorialScreen.route)
+                        eMessage.value = ""
+                        val userRepository: UserRepository by lazy {
+                            UserRepository(
+                                MiAPI.instance
+                            )
                         }
+                        val user = UserLogin(emailValue.value,passwordValue.value)
+                        coroutineScope.launch {
+                            Log.d("email",emailValue.value)
+                            val result: Result<UserAccessToken> = userRepository.signIn(user)
+                            val message: UserAccessToken? = result.getOrNull()
+                            val token = message?.accessToken ?: ""
+                            try {
+
+
+                                if (message != null && token.isNotEmpty()) {
+                                    Log.d("Resultado Mensaje:", result.toString())
+                                    Log.d("Resultado Mensaje:", message.toString())
+                                    eMessage.value = "Iniciando Sesion..."
+                                    PreferenceHelper.setToken(context,token)
+                                    Log.d("NuevoToken:", token)
+                                    if (tutorialStatus >= 6) {
+                                        navController.navigate(route = AppScreens.CategoriesScreen.route)
+                                        {
+                                            popUpTo(AppScreens.CategoriesScreen.route) {
+                                                inclusive = true
+                                            }
+                                        }
+                                    } else {
+                                        navController.navigate(route = AppScreens.TutorialScreen.route) {
+                                            popUpTo(AppScreens.TutorialScreen.route) {
+                                                inclusive = true
+                                            }
+                                        }
+                                    }
+
+                                } else if (message != null) {
+                                    Log.d("Resultado Vacio:", result.toString())
+                                    Log.d("Resultado Vacio:", message.toString())
+                                    eMessage.value = message.toString()
+                                } else {
+                                    Log.d("Resultado Error:", result.toString())
+                                    Log.d("Resultado Error:", message.toString())
+                                    eMessage.value = "Comprueba que tienes conexion a internet"
+                                }
+                            } catch (e: Exception) {
+                                Log.d("Resultado Error:", result.toString())
+                                Log.d("Resultado Error:", message.toString())
+                                eMessage.value = "Comprueba que tienes conexion a internet"
+                            }
+                        }
+
+
                         /*if (emailValue.value.isNotEmpty() && passwordValue.value.isNotEmpty()) {
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(
                                 emailValue.value,
@@ -222,7 +282,13 @@ fun LoginScreen(navController: NavController) {
                     )
                 }
                 */
-
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    text = eMessage.value,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White,
+                )
                 Box(modifier = Modifier
                     .fillMaxSize(),
                     contentAlignment = Alignment.BottomCenter) {

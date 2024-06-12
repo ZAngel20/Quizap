@@ -1,22 +1,14 @@
-package com.politecnico.quizap
+package com.politecnico.quizap.Views
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,8 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.politecnico.quizap.ViewModel.CategoriesScreenViewModel
-import com.politecnico.quizap.data.Category
+import com.politecnico.quizap.data.Model.Category
 import com.politecnico.quizap.ui.theme.QuizapTheme
 @Composable
 fun RankingScreen(modifier: Modifier = Modifier, navController: NavController) {
@@ -46,7 +37,7 @@ fun RankingScreen(modifier: Modifier = Modifier, navController: NavController) {
                 .weight(1f)
                 .background(brush),
             contentAlignment = Alignment.Center
-        ) {
+        ) {/*
             val viewModel = remember { CategoriesScreenViewModel() }
             val categories by viewModel.levels.observeAsState()
             val state = rememberLazyListState()
@@ -60,9 +51,8 @@ fun RankingScreen(modifier: Modifier = Modifier, navController: NavController) {
                     items(categories ?: emptyList()) {category ->
                         RankingItem(category = category)
                     }
-                }
+                }*/
             }
-
             BottomNavigation(modifier = modifier, navController = navController, selectedTab = 1)
 
         }
@@ -90,7 +80,7 @@ fun RankingScreen(modifier: Modifier = Modifier, navController: NavController) {
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
-                    category.levels.forEach { level ->
+                    /*category.levels.forEach { level ->
                         DropdownMenuItem(
                             text = { Text(text = level.name) },
                             onClick = {
@@ -98,7 +88,7 @@ fun RankingScreen(modifier: Modifier = Modifier, navController: NavController) {
                                 //navController.navigate(route = AppScreens.GameScreen.route + "/${level.code}")
                             }
                         )
-                    }
+                    }*/
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.politecnico.quizap
+package com.politecnico.quizap.Views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,16 +14,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -34,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.ViewModel.CategoriesScreenViewModel
-import com.politecnico.quizap.data.Category
+import com.politecnico.quizap.ViewModel.LevelViewModel
+import com.politecnico.quizap.data.Model.Category
+import com.politecnico.quizap.navigation.AppScreens
 import com.politecnico.quizap.ui.theme.QuizapTheme
 @Composable
 fun CategoriesScreen(modifier: Modifier = Modifier, navController: NavController) {
@@ -52,18 +50,21 @@ fun CategoriesScreen(modifier: Modifier = Modifier, navController: NavController
                 .background(brush),
             contentAlignment = Alignment.Center
         ) {
-            val viewModel = remember { CategoriesScreenViewModel() }
-            val categories by viewModel.levels.observeAsState()
+            val categoriesScreenViewModel = CategoriesScreenViewModel.getInstance()
+            val viewModel = remember { categoriesScreenViewModel}
+            val categories by viewModel.listCategory.observeAsState(initial = emptyList())
             val state = rememberLazyListState()
-
+            categoriesScreenViewModel.setCategories(emptyList())
             LazyColumn(
-                modifier = Modifier.fillMaxWidth()
-                    .fillMaxHeight().padding(horizontal = 16.dp, vertical = 30.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(horizontal = 16.dp, vertical = 30.dp),
                 verticalArrangement = Arrangement.spacedBy(40.dp),
                 state = state
             )   {
-                    items(categories ?: emptyList()) {category ->
-                        CategoryItem(category = category)
+                    items(categories) {category ->
+                        CategoryItem(navController = navController, category = category)
                     }
                 }
             }
@@ -74,38 +75,19 @@ fun CategoriesScreen(modifier: Modifier = Modifier, navController: NavController
     }
 
     @Composable
-    fun CategoryItem(category: Category) {
-        var expanded by remember { mutableStateOf(false) }
-
+    fun CategoryItem(navController: NavController,category: Category) {
+        val levelViewModel = LevelViewModel.getInstance()
+        levelViewModel.setLevels(emptyList())
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         ) {
             ClickableRoundedRectangle(
-                onClick = { expanded =!expanded },
+                onClick = {
+                    navController.navigate(AppScreens.LevelScreen.route)},
                 text = category.name
             )
-
-            if (expanded) {
-                DropdownMenu(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    category.levels.forEach { level ->
-                        DropdownMenuItem(
-                            text = { Text(text = level.name) },
-                            onClick = {
-                                // Navigate to GameScreen with level data
-                                //navController.navigate(route = AppScreens.GameScreen.route + "/${level.code}")
-                            }
-                        )
-                    }
-                }
-            }
         }
     }
 
