@@ -1,12 +1,18 @@
 package com.politecnico.quizap.data.Model
 
+
 data class Question(
     val id : Int,
-    val idLevel  : Int,
+    val idAnswer: Int,
     val text: String,
     val index: Int,
-    val answers: List<Answer>,
-    val correctAnswer: Int
+    var answers: List<Answer>
+)
+data class PreQuestion(
+    val id : Int,
+    val idAnswer: Int,
+    val text: String,
+    val index: Int,
 )
 data class QuestionDto(
     val id: Int

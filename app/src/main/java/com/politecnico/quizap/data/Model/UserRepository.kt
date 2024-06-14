@@ -40,7 +40,7 @@ class UserRepository(
         val response = api.resendCode(user)
         Log.d ("Despues Llamada",response.toString())
         if (response.isSuccessful) {
-            Log.d ("Despues Succes",response.toString())
+            Log.d ("Despues Success",response.toString())
             return MyMessage(0)
         } else {
             val errorCode = response.code()
@@ -74,5 +74,52 @@ class UserRepository(
            return Result.failure(e)
        }
    }
+    suspend fun changeUser(context: Context,user: UserName) : MyMessage {
+        val token = PreferenceHelper.getToken(context)
+        val codeToken = "Bearer " + token
+        val response = api.changeUser(codeToken,user)
+        Log.d ("Despues Llamada",response.toString())
+        if (response.isSuccessful) {
+            Log.d ("Despues Success",response.toString())
+            return MyMessage(0)
+        } else {
+            val errorCode = response.code()
+            val errorMessage = response.errorBody()?.string()
+            Log.d("ErrorLlamada:", "Error $errorCode: $errorMessage")
+            return MyMessage(errorCode)
+        }
+    }
+    suspend fun requestChangePass(context: Context,user: UserResend) : MyMessage {
+        val token = PreferenceHelper.getToken(context)
+        val codeToken = "Bearer " + token
+        Log.d ("Antes Llamada",user.email)
+        val response = api.requestChangePass(codeToken,user)
+        Log.d ("Despues Llamada",response.toString())
+        if (response.isSuccessful) {
+            Log.d ("Despues Success",response.toString())
+            return MyMessage(0)
+        } else {
+            val errorCode = response.code()
+            val errorMessage = response.errorBody()?.string()
+            Log.d("ErrorLlamada:", "Error $errorCode: $errorMessage")
+            return MyMessage(errorCode)
+        }
+    }
+    suspend fun changePass(context: Context,user: UserPass) : MyMessage {
+        val token = PreferenceHelper.getToken(context)
+        val codeToken = "Bearer " + token
+        Log.d ("Antes Llamada",user.email)
+        val response = api.changePass(codeToken,user)
+        Log.d ("Despues Llamada",response.toString())
+        if (response.isSuccessful) {
+            Log.d ("Despues Success",response.toString())
+            return MyMessage(0)
+        } else {
+            val errorCode = response.code()
+            val errorMessage = response.errorBody()?.string()
+            Log.d("ErrorLlamada:", "Error $errorCode: $errorMessage")
+            return MyMessage(errorCode)
+        }
+    }
 }
 

@@ -93,14 +93,14 @@ fun VerificacionTokenScreen(navController: NavController, email : String) {
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
                     Text(
-                        text = "Se le ha enviado un codigo a su direccion de correo proporcionada",
+                        text = stringResource(id = R.string.TCodeSent),
                         color = Color.White,
                         fontSize = MaterialTheme.typography.titleLarge.fontSize,
                         fontWeight = MaterialTheme.typography.titleLarge.fontWeight,
                         textAlign = TextAlign.Center,
                     )
                     Text(
-                        text = "Escriba el Token a continuacion",
+                        text = stringResource(id = R.string.TWriteCode),
                         color = Color.White,
                         fontSize = MaterialTheme.typography.titleLarge.fontSize,
                         fontWeight = MaterialTheme.typography.titleLarge.fontWeight,
@@ -108,7 +108,7 @@ fun VerificacionTokenScreen(navController: NavController, email : String) {
                     )
                     LoginTextField(
                         textFieldValue = tokenValue,
-                        textLabel = stringResource(id = R.string.email),
+                        textLabel = stringResource(id = R.string.token),
                         keyboardType = KeyboardType.Email,
                         keyboardActions = KeyboardActions(
                             onNext = {
@@ -143,7 +143,7 @@ fun VerificacionTokenScreen(navController: NavController, email : String) {
                                         if (myMessage.statusCode == 0) {
                                             Log.d("Resultado Mensaje:", result.toString())
                                             Log.d("Resultado Mensaje:", myMessage.toString())
-                                            eMessage.value = "El Codigo es Correcto"
+                                            eMessage.value = context.getString(R.string.codeCorrect)
                                             navController.navigate(AppScreens.LoginScreen.route) {
                                                 popUpTo(AppScreens.LoginScreen.route) {
                                                     inclusive = true
@@ -152,13 +152,12 @@ fun VerificacionTokenScreen(navController: NavController, email : String) {
                                         } else {
                                             Log.d("Resultado Error:", result.toString())
                                             Log.d("Resultado Error:", myMessage.toString())
-                                            eMessage.value =
-                                                "Comprueba que tienes conexion a internet"
+                                            eMessage.value = context.getString(R.string.noWifi)
                                         }
                                     } catch (e: Exception) {
                                         Log.d("Resultado Error:", result.toString())
                                         Log.d("Resultado Error:", myMessage.toString())
-                                        eMessage.value = "Comprueba que tienes conexion a internet"
+                                        eMessage.value = context.getString(R.string.noWifi)
                                     }
                             }
                 }
@@ -167,7 +166,7 @@ fun VerificacionTokenScreen(navController: NavController, email : String) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 15.dp),
-                text = "Volver a Enviar",
+                text = stringResource(id = R.string.sendAgain),
                 displayProgressBar = false,
                 onClick = {
                     eMessage.value = ""
@@ -185,17 +184,17 @@ fun VerificacionTokenScreen(navController: NavController, email : String) {
                                 if (myMessage.statusCode == 0) {
                                     Log.d("Resultado Mensaje:", result.toString())
                                     Log.d("Resultado Mensaje:", myMessage.toString())
-                                    eMessage.value = "Se ha Reenviado con Éxito"
+                                    eMessage.value = context.getString(R.string.Resend)
 
                                 } else {
                                     Log.d("Resultado Error:", result.toString())
                                     Log.d("Resultado Error:", myMessage.toString())
-                                    eMessage.value = "Comprueba que tienes conexion a internet"
+                                    eMessage.value = context.getString(R.string.noWifi)
                                 }
                             } catch (e: Exception) {
                                 Log.d("Resultado Error:", result.toString())
                                 Log.d("Resultado Error:", myMessage.toString())
-                                eMessage.value = "Comprueba que tienes conexion a internet"
+                                eMessage.value = context.getString(R.string.noWifi)
                             }
                     }
                 }

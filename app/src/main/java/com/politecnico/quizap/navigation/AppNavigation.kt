@@ -10,6 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.codelab.basiclayouts.Authentication.ChangeUser
+import com.codelab.basiclayouts.Authentication.ForgotPassword
 import com.politecnico.quizap.Authentication.LoginScreen
 import com.politecnico.quizap.Authentication.RegistrationScreen
 import com.politecnico.quizap.Authentication.VerificacionTokenScreen
@@ -37,7 +39,10 @@ fun AppNavigation() {
                 LoginScreen(navController = navController)
             }
             composable(route = AppScreens.ForgotPassword.route) {
-                LoginScreen(navController = navController)
+                ForgotPassword(navController = navController)
+            }
+            composable(route = AppScreens.ChangeUser.route) {
+                ChangeUser(navController = navController)
             }
             composable(route = AppScreens.TutorialScreen.route) {
                 TutoScreen(navController = navController)

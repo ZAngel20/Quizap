@@ -27,11 +27,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.politecnico.quizap.R
 import com.politecnico.quizap.ViewModel.ProfileScreenViewModel
+import com.politecnico.quizap.ViewModel.UserViewModel
+import com.politecnico.quizap.data.Model.Profile
+import com.politecnico.quizap.data.Model.Services.PreferenceHelper
+import com.politecnico.quizap.navigation.AppScreens
 import com.politecnico.quizap.ui.theme.QuizapTheme
 
 
@@ -39,6 +46,7 @@ import com.politecnico.quizap.ui.theme.QuizapTheme
 fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController) {
     val colors = listOf(Color(0xFF127489), Color(0xFF122689))
     val brush = Brush.verticalGradient(colors)
+    val context = LocalContext.current
     Column(
         modifier.fillMaxSize()
     ) {
@@ -52,17 +60,20 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
             contentAlignment = Alignment.Center
         ) {
             val profileScreenViewModel = ProfileScreenViewModel.getInstance()
-            val viewModel = remember { profileScreenViewModel }
-            val name by viewModel.username.observeAsState(initial = "???")
-            val email by viewModel.email.observeAsState(initial = "???")
-            val score by viewModel.score.observeAsState(initial = 0)
-            val ranking by viewModel.ranking.observeAsState(initial = null)
+            val userViewModel = UserViewModel.getInstance()
+            val uservM = remember { userViewModel }
+            val profileviewModel = remember { profileScreenViewModel }
+            profileScreenViewModel.setProfile(Profile(uservM.userName.value?: "-",uservM.email.value?: "-"))
+            val name by profileviewModel.username.observeAsState(initial = "-")
+            val email by profileviewModel.email.observeAsState(initial = "-")
+            val score by profileviewModel.score.observeAsState(initial = 0)
+            val ranking by profileviewModel.ranking.observeAsState(initial = null)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .padding(horizontal = 16.dp, vertical = 30.dp),
-                verticalArrangement = Arrangement.spacedBy(40.dp)
+                verticalArrangement = Arrangement.spacedBy(25.dp)
             ) {
                 // Nombre de usuario y correo electrónico
                 Row(
@@ -74,7 +85,7 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text(
-                            text = "Nombre:",
+                            text = stringResource(id = R.string.PName),
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )
@@ -84,7 +95,12 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                             color = Color.White
                         )
                         Button(
-                            onClick = { /* editar nombre de usuario */ },
+                            onClick = {
+                                navController.navigate(AppScreens.ChangeUser.route) {
+                                popUpTo(AppScreens.ChangeUser.route) {
+                                    inclusive = true
+                                }
+                            } },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFF82189B)
                             )) {
@@ -97,7 +113,7 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text(
-                            text = "Correo:",
+                            text = stringResource(id = R.string.PEmail),
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )
@@ -106,13 +122,6 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )
-                        Button(onClick = { /* editar nombre de usuario */ },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFF82189B)
-                            )) {
-                            Icon(imageVector = Icons.Filled.Edit, contentDescription = "Editar nombre de usuario", tint = Color.White)
-
-                        }
                     }
                 }
 
@@ -131,7 +140,7 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Score:",
+                        text = stringResource(id = R.string.PScore),
                         style = MaterialTheme.typography.titleLarge,
                         color = Color.White
                     )
@@ -155,12 +164,12 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Ranking:",
+                        text = stringResource(id = R.string.PRanking),
                         style = MaterialTheme.typography.titleLarge,
                         color = Color.White
                     )
                     Text(
-                        text = if (ranking != null) "${ranking}" else "No estás en el ranking",
+                        text = if (ranking != null) "${ranking}" else stringResource(id = R.string.noRanking),
                         style = MaterialTheme.typography.titleSmall,
                         color = Color.White
                     )
@@ -180,7 +189,11 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Button(
-                        onClick = { /* cambiar contraseña */ },
+                        onClick = { navController.navigate(AppScreens.ForgotPassword.route) {
+                            popUpTo(AppScreens.ForgotPassword.route) {
+                                inclusive = true
+                            }
+                        } },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF82189B)
                         ),
@@ -189,10 +202,19 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                             .background(Color.Transparent, shape = RoundedCornerShape(4.dp))
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Text("Cambiar contraseña", color = Color.White)
+                        Text(stringResource(id = R.string.BTchangePass), color = Color.White)
                     }
                     Button(
-                        onClick = { /* desloguearse */ },
+                        onClick = {
+                            PreferenceHelper.setToken(context,"")
+                            val userViewModel = UserViewModel.getInstance()
+                            userViewModel.logout()
+                            navController.navigate(AppScreens.LoginScreen.route) {
+                                popUpTo(AppScreens.LoginScreen.route) {
+                                    inclusive = true
+                                }
+                            }
+                                  },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFF82189B)
                         ),
@@ -201,21 +223,17 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                             .background(Color.Transparent, shape = RoundedCornerShape(4.dp))
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Text("Cerrar Sesión", color = Color.White)
+                        Text(stringResource(id = R.string.BTlogout), color = Color.White)
                     }
                 }
             }
         }
-
-
-
         BottomNavigation(modifier = modifier, navController = navController, selectedTab = 2)
-
     }
 }
 fun formatEmail(email: String): String {
-    if (email.equals("???")) {
-        return "???"
+    if (email.equals("-")) {
+        return "-"
     }
     val localPart = email.substringBefore("@")
     val domain = email.substringAfter("@")

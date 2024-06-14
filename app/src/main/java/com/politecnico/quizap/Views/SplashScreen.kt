@@ -46,7 +46,6 @@ fun SplashScreen(navController: NavHostController) {
 
     if (token.isNotEmpty()) {
         val userViewModel = UserViewModel.getInstance()
-
         lifecycleScope.launch {
             val result : Result<User> = userRepository.getUser(context)
             try {
@@ -55,22 +54,35 @@ fun SplashScreen(navController: NavHostController) {
                     if (user != null) {
                         userViewModel.setUser(user)
                         Log.d("Resultado:",result.toString())
-                        Log.d("Resultado:",user.id)
-                        Log.d("Resultado:",user.userName)
-                        Log.d("Resultado:",user.email)
-                        navController.navigate(route = AppScreens.CategoriesScreen.route)
+                        navController.navigate(AppScreens.CategoriesScreen.route) {
+                            popUpTo(AppScreens.CategoriesScreen.route) {
+                                inclusive = true
+                            }
+                        }
                         } else {
                             Log.d("Resultado:",result.toString())
-                        navController.navigate(route = AppScreens.LoginScreen.route)
+                        navController.navigate(AppScreens.LoginScreen.route) {
+                            popUpTo(AppScreens.LoginScreen.route) {
+                                inclusive = true
+                            }
+                        }
                         }
             } catch (e: Exception) {
                 Log.d("Resultado:",result.toString())
-                navController.navigate(route = AppScreens.LoginScreen.route)
+                navController.navigate(AppScreens.LoginScreen.route) {
+                    popUpTo(AppScreens.LoginScreen.route) {
+                        inclusive = true
+                    }
+                }
             }
         }
     } else {
         Log.d("Resultado:","Token Vacio")
-        navController.navigate(route = AppScreens.LoginScreen.route)
+        navController.navigate(AppScreens.LoginScreen.route) {
+            popUpTo(AppScreens.LoginScreen.route) {
+                inclusive = true
+            }
+        }
     }
 
     Box(

@@ -16,11 +16,8 @@
     <string name="tutorial_5_title">4. Have fun</string>
     <string name="tutorial_5_content">" Last but not least, have fun!"</string>
     <string name="tutorial_5_end">Quizap is designed to offer a fun and challenging experience for all trivia lovers.</string>
-    <string name="tutorial_6_title">¿HOW TO PLAY?</string>
-    <string name="tutorial_6_content">You will have to answer the question that will appear at the top of the screen by clicking on one of the answers,</string>
-    <string name="tutorial_6_end">The time limit will be calculated below, if the bar is full it will count as a failure and the answers will be shown, in red those that are not correct and in green those that are correct.</string>
 
-    <string name="howtoplay">How to play</string>
+    <string name="comenzar">How to play</string>
     <string name="play">Play</string>
 
     <string name="name">Name</string>
@@ -36,7 +33,7 @@
     <string name="phone">Phone</string>
 
     <string name="noaccount">¿You do not have an account?</string>
-    <string name="registernow">Register Now</string>
+    <string name="registernow">Sign Up</string>
 
     <string name="google">Log in with google</string>
 
@@ -45,4 +42,39 @@
     <string name="top_navigation_shop">Shop</string>
     <string name="bottom_navigation_categories">Categories</string>
     <string name="bottom_navigation_ranking">Ranking</string>
+    <string name="MissingFields">Data is Missing</string>
+    <string name="token">Token</string>
+    <string name="codeCorrect">The Code is Correct</string>
+    <string name="noWifi">Verify that you have an internet connection</string>
+    <string name="sendAgain">Resend</string>
+    <string name="Resend">Resent Successfully</string>
+    <string name="nameissue">The name must be less than 20 characters</string>
+    <string name="emailUsed">That email already exists</string>
+    <string name="passissue1">The password must be at least 8 characters</string>
+    <string name="passissue2">The password must contain uppercase, lowercase, and numbers or symbols</string>
+    <string name="emailWrong">The email is not correct</string>
+    <string name="passissue3">The passwords do not match</string>
+    <string name="TCodeSent">A code has been sent to your provided email address, Write it below</string>
+    <string name="TWriteCode">Enter the token below</string>
+    <string name="emailChange">Enter the New Email to Change</string>
+    <string name="change">Change</string>
+    <string name="send">Send</string>
+    <string name="writeNewPass">Enter the new password</string>
+    <string name="writeNewUser">Enter the new username</string>
+    <string name="loginin">Logging in</string>
+    <string name="badlogin">Incorrect username or password, please try again</string>
+    <string name="selectLevel">Choose a Level:</string>
+    <string name="PName">Name:</string>
+    <string name="PEmail">Email:</string>
+    <string name="PScore">Score:</string>
+    <string name="PRanking">Ranking:</string>
+    <string name="noRanking">You are not in the ranking</string>
+    <string name="BTchangePass">Change password</string>
+    <string name="BTlogout">Log out</string>
+    <string name="youWon">Congratulations, you won!</string>
+    <string name="youLose">You failed, try again</string>
+    <string name="exit">Exit</string>
+    <string name="repeat">Repeat</string>
+    <string name="youScore">Your score is:</string>
+    <string name="wantExit">¿Quit?</string>
 </resources>

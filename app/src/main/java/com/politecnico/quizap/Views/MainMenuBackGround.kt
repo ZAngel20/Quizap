@@ -1,20 +1,18 @@
 package com.politecnico.quizap.Views
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.MenuBook
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -26,8 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.R
@@ -62,25 +63,21 @@ fun TopNavigation(modifier: Modifier = Modifier, navController: NavController, t
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF2BB5CA)),
         title = {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                /*Row(
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
+
+        },
+
+        navigationIcon = {
+
                     Image(
                         painter = painterResource(id = R.drawable.ic_logo),
                         contentDescription = "Logo",
-                        contentScale = ContentScale.
+                        modifier = Modifier.fillMaxWidth()
+                            .height(60.dp),
+                        contentScale = ContentScale.FillHeight,
+                        alignment = Alignment.Center
                     )
-                }*/
-            }
 
-        },
-        navigationIcon = {
+
             /*BadgedBox(badge = { Text(text = "200") },content = {IconButton(onClick = { /* Manejar clic del carrito */ }) {
                 Icon(
                     imageVector = Icons.Default.ShoppingCart,
@@ -100,20 +97,13 @@ fun TopNavigation(modifier: Modifier = Modifier, navController: NavController, t
         },
         actions = {
             // Derecha: Icono de las tres barras
-            if (tutorial > 6) {
-                IconButton(onClick = { /* Manejar clic del menú */ }) {
-                    Icon(
-                        imageVector = Icons.Default.Settings,
-                        contentDescription = "Menú",
-                        tint = Color.Black
-                    )
-                }
-            }
+
         },
 
     )
 
 }
+
 @Composable
 fun BottomNavigation(modifier: Modifier = Modifier, navController: NavController, selectedTab: Int) {
     NavigationBar(

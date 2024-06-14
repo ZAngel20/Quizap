@@ -1,57 +1,55 @@
 package com.politecnico.quizap.data.Model
 
+import android.content.Context
 import android.util.Log
 import com.politecnico.quizap.data.Model.API.MiAPI
+import com.politecnico.quizap.data.Model.Services.PreferenceHelper
 
 class GameRepository(
     private val api: MiAPI
 ) {
-    suspend fun getCategories(): Result<List<Category>> {
+    suspend fun getCategories(context : Context): Result<List<Category>> {
+        val token = PreferenceHelper.getToken(context)
         try {
-            Log.d("AntesLlamada:" , "Se está llamando")
-            val response = api.getCategories()
-            Log.d("DespuesLlamada:" ,response.toString())
+            val codeToken = "Bearer " + token
+            Log.d("AntesLlamada:", codeToken)
+            val response = api.getCategories(codeToken)
             return Result.success(response)
         } catch (e : Exception) {
-            Log.d("ErrorLlamada:" ,e.message?: "No hay Texto de Error")
-            val errorMessage = e.message?: "Error desconocido"
-            return Result.failure(RuntimeException(errorMessage))
+            return Result.failure(e)
         }
     }
-    suspend fun getLevels(category: CategoryDto ): Result<List<Level>> {
+    suspend fun getLevels(context : Context,category: CategoryDto ): Result<List<Level>> {
+        val token = PreferenceHelper.getToken(context)
         try {
-            Log.d("AntesLlamada:" , "Se está llamando")
-            val response = api.getLevels(category)
-            Log.d("DespuesLlamada:" ,response.toString())
+            val codeToken = "Bearer " + token
+            Log.d("AntesLlamada:", codeToken)
+            val response = api.getLevels(codeToken,category.id)
             return Result.success(response)
         } catch (e : Exception) {
-            Log.d("ErrorLlamada:" ,e.message?: "No hay Texto de Error")
-            val errorMessage = e.message?: "Error desconocido"
-            return Result.failure(RuntimeException(errorMessage))
+            return Result.failure(e)
         }
     }
-    suspend fun getQuestions(level: LevelDto): Result<List<Question>> {
+    suspend fun getQuestions(context : Context,level: LevelDto): Result<List<PreQuestion>> {
+        val token = PreferenceHelper.getToken(context)
         try {
-            Log.d("AntesLlamada:" , "Se está llamando")
-            val response = api.getQuestions(level)
-            Log.d("DespuesLlamada:" ,response.toString())
+            val codeToken = "Bearer " + token
+            Log.d("AntesLlamada:", codeToken)
+            val response = api.getQuestions(codeToken,level.id)
             return Result.success(response)
         } catch (e : Exception) {
-            Log.d("ErrorLlamada:" ,e.message?: "No hay Texto de Error")
-            val errorMessage = e.message?: "Error desconocido"
-            return Result.failure(RuntimeException(errorMessage))
+            return Result.failure(e)
         }
     }
-    suspend fun getAnswer(question: QuestionDto): Result<Answer> {
+    suspend fun getAnswers(context : Context,question: QuestionDto): Result<List<Answer>> {
+        val token = PreferenceHelper.getToken(context)
         try {
-            Log.d("AntesLlamada:" , "Se está llamando")
-            val response = api.getAnswer(question)
-            Log.d("DespuesLlamada:" ,response.toString())
+            val codeToken = "Bearer " + token
+            Log.d("AntesLlamada:", codeToken)
+            val response = api.getAnswers(codeToken,question.id)
             return Result.success(response)
         } catch (e : Exception) {
-            Log.d("ErrorLlamada:" ,e.message?: "No hay Texto de Error")
-            val errorMessage = e.message?: "Error desconocido"
-            return Result.failure(RuntimeException(errorMessage))
+            return Result.failure(e)
         }
     }
 }

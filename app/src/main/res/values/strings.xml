@@ -20,11 +20,7 @@
     <string name="tutorial_5_content">Por último, pero no menos importante, ¡diviértete! </string>
     <string name="tutorial_5_end">Quizap está diseñado para ofrecer una experiencia divertida y desafiante para todos los amantes de la trivia.</string>
 
-    <string name="tutorial_6_title">¿COMO JUGAR?</string>
-    <string name="tutorial_6_content">Tendrás que responder a la pregunta que aparecerá en la parte superior de la pantalla pulsando alguna de las respuestas,</string>
-    <string name="tutorial_6_end">el tiempo limite se calculará abajo si la barra se llena contará como fallo y se te mostraran las respuestas, en rojo las que no sean correctas y en verde la que si es correcta</string>
-
-    <string name="howtoplay">¿Como Jugar?</string>
+    <string name="comenzar">¿Como Jugar?</string>
     <string name="play">Jugar</string>
 
     <string name="name">Nombre</string>
@@ -34,7 +30,7 @@
     <string name="youforgot">Escriba el correo al que quiere recuperar contraseña</string>
     <string name="recover">Recuperar</string>
     <string name="or">O</string>
-    <string name="login">Entrar</string>
+    <string name="login">Iniciar Sesion</string>
     <string name="register">Registrarse</string>
     <string name="rpassword">Confirmar Contraseña</string>
     <string name="phone">Numero de telefono</string>
@@ -49,10 +45,39 @@
     <string name="top_navigation_shop">Shop</string>
     <string name="bottom_navigation_categories">Categorías</string>
     <string name="bottom_navigation_ranking">Ranking</string>
-    <string name="codigo">Codigo</string>
-    <string name="confirmarCodigo">Confirmar Codigo</string>
-    <string name="confirmarContraseña">Confirmar Nueva Contraseña</string>
-    <string name="NewPassword">Nueva Contraseña</string>
-    <string name="youcode">Escriba el Codigo que hemos enviado a su correo</string>
-    <string name="youpass">Escriba la nueva contraseña para su cuenta</string>
+    <string name="MissingFields">Faltan Rellenar Datos</string>
+    <string name="token">Codigo</string>
+    <string name="codeCorrect">El Código es Correcto</string>
+    <string name="noWifi">Verifica que tienes conexión a internet</string>
+    <string name="sendAgain">Volver a Enviar</string>
+    <string name="Resend">Se ha Reenviado con Éxito</string>
+    <string name="nameissue">El nombre debe ser menos de 20 caracteres</string>
+    <string name="emailUsed">Ese correo ya Existe</string>
+    <string name="passissue1">La contraseña debe ser de al menos 8 caracteres</string>
+    <string name="passissue2">La contraseña debe contener Mayusculas Minusculas y Numeros o Simbolos</string>
+    <string name="emailWrong">El correo no es un correo Correcto</string>
+    <string name="passissue3">Las Contraseñas no coinciden</string>
+    <string name="TCodeSent">Se le ha enviado un codigo a su direccion de correo proporcionada, Escribalo a continuacion</string>
+    <string name="TWriteCode">Escriba el Token a continuacion</string>
+    <string name="emailChange">Escriba el Nuevo Correo a cambiar</string>
+    <string name="change">Cambiar</string>
+    <string name="send">Enviar</string>
+    <string name="writeNewPass">Ingrese la nueva contraseña</string>
+    <string name="writeNewUser">Escriba el nuevo Usuario</string>
+    <string name="loginin">Iniciando Sesión...</string>
+    <string name="badlogin">Usuario o Contraseña incorrectos, inténtelo de nuevo</string>
+    <string name="selectLevel">Elige Un Nivel:</string>
+    <string name="PName">Nombre:</string>
+    <string name="PEmail">Correo:</string>
+    <string name="PScore">Score:</string>
+    <string name="PRanking">Ranking:</string>
+    <string name="noRanking">No estás en el ranking</string>
+    <string name="BTchangePass">Cambiar contraseña</string>
+    <string name="BTlogout">Cerrar Sesión</string>
+    <string name="youWon">¡Felicidades, has ganado!</string>
+    <string name="youLose">Fallaste, vuelve a intentarlo</string>
+    <string name="exit">Salir</string>
+    <string name="repeat">Repetir</string>
+    <string name="youScore">Tu puntaje es:</string>
+    <string name="wantExit">¿Salir?</string>
 </resources>

@@ -37,6 +37,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -76,6 +77,7 @@ fun RegistrationScreen(navController: NavController) {
     var somethingWrong = remember { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     var confirmPasswordVisibility by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
     Box(
@@ -83,21 +85,7 @@ fun RegistrationScreen(navController: NavController) {
           .fillMaxSize()
           .background(brush),
     ){
-        /*FloatingActionButton(
-            containerColor = Color(0xFF4472c0),
-            modifier = Modifier
-                .padding(horizontal = 5.dp, vertical = 10.dp),
-            onClick = {
-                navController.navigate(route = AppScreens.LoginScreen.route)
-            }
-        ) {
-            Icon(
-                modifier = Modifier.size(30.dp),
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Forward Icon",
-                tint = Color.White
-            )
-        }*/
+
         Column(modifier = Modifier
             .verticalScroll(rememberScrollState())
         ) {
@@ -116,12 +104,6 @@ fun RegistrationScreen(navController: NavController) {
                         .fillMaxWidth()
                         .padding(horizontal = 60.dp, vertical = 10.dp)
                 )
-                /*
-                Text(
-                    color = Color.White,
-                    text = "Registrate",
-                    style = MaterialTheme.typography.bodyMedium.copy()
-                )*/
 
                 LoginTextField(
                     textFieldValue = nameValue,
@@ -145,18 +127,6 @@ fun RegistrationScreen(navController: NavController) {
                     imeAction = ImeAction.Next
                 )
 
-/*
-                LoginTextField(
-                    textFieldValue = phoneValue,
-                    textLabel = stringResource(id = R.string.phone),
-                    maxChar = 10,
-                    keyboardType = KeyboardType.Phone,
-                    keyboardActions = KeyboardActions(
-                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                    ),
-                    imeAction = ImeAction.Next
-                )
-*/
                 LoginTextField(
                     textFieldValue = passwordValue,
                     textLabel = stringResource(id = R.string.password),
@@ -244,38 +214,37 @@ fun RegistrationScreen(navController: NavController) {
                                                     } else if (myMessage.statusCode == 400) {
                                                         Log.d("Resultado 409:", result.toString())
                                                         Log.d("Resultado 409:",myMessage.toString())
-                                                        somethingWrong.value = "El nombre debe ser menos de 20 caracteres"
+                                                        somethingWrong.value = context.getString(R.string.nameissue)
                                                     }else if (myMessage.statusCode == 409) {
                                                         Log.d("Resultado 409:", result.toString())
                                                         Log.d("Resultado 409:",myMessage.toString())
-                                                        somethingWrong.value = "Ese correo ya Existe"
+                                                        somethingWrong.value = context.getString(R.string.emailUsed)
                                                     } else {
                                                         Log.d("Resultado Error:", result.toString())
                                                         Log.d("Resultado Error:",myMessage.toString())
-                                                        somethingWrong.value = "Verifica que tienes conexión a internet"
+                                                        somethingWrong.value = context.getString(R.string.noWifi)
 
                                                     }
                                                 } catch (e: Exception) {
                                                     Log.d("Resultado Error:", result.toString())
                                                     Log.d("Resultado Error:", myMessage.toString())
-                                                    somethingWrong.value =
-                                                        "Comprueba que tienes conexion a internet"
+                                                    somethingWrong.value = context.getString(R.string.noWifi)
                                                 }
                                             }
                                         } else if (isValidPassword(passwordValue.value) == 1){
 
-                                            somethingWrong.value = "La contraseña debe ser de al menos 8 caracteres "
+                                            somethingWrong.value = context.getString(R.string.passissue1)
                                         } else {
-                                            somethingWrong.value = "La contraseña debe contener Mayusculas Minusculas y Numeros o Simbolos"
+                                            somethingWrong.value = context.getString(R.string.passissue2)
                                         }
                                     } else {
-                                        somethingWrong.value = "El correo no es un correo Correcto"
+                                        somethingWrong.value = context.getString(R.string.emailWrong)
                                     }
                                 } else {
-                                    somethingWrong.value = "Las Contraseñas no coinciden"
+                                    somethingWrong.value = context.getString(R.string.passissue3)
                                 }
                             } else {
-                            somethingWrong.value = "Faltan Rellenar Datos"
+                            somethingWrong.value = context.getString(R.string.MissingFields)
                         }
                     }
                 )
@@ -303,103 +272,6 @@ fun RegistrationScreen(navController: NavController) {
                     )
             }
             }
-
-                /*
-                ClickableText(
-                    text = buildAnnotatedString {
-                        append("¿Ya tienes una cuenta?")
-
-                        withStyle(
-                            style = SpanStyle(
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Bold
-                            )
-                        ){
-                            append("Inicia sesión")
-                        }
-                    },
-                    onClick = {
-                        navController.navigate(route = AppScreens.LoginScreen.route)
-                    }
-                )*/
-                /*
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Divider(color = Color.White, modifier = Modifier.weight(1f).padding(start = 10.dp ))
-                    Text(
-                        text = stringResource(id = R.string.or),
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    Divider(color = Color.White, modifier = Modifier.weight(1f).padding(end = 10.dp ))
-                }
-                Spacer(modifier = Modifier.height(5.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-
-                    SocialMediaButton(
-                        text = stringResource(id = R.string.google),
-                        onClick = { },
-                        socialMediaColor = GMAILCOLOR
-                    )
-                }
-            }
-             */
-            /*
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ){
-                    Divider(
-                        modifier = Modifier.width(24.dp),
-                        thickness = 1.dp,
-                        color = Color.Gray
-                    )
-
-                    Text(
-                        modifier = Modifier.padding(8.dp),
-                        text = "O",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontWeight = FontWeight.Black
-                        )
-                    )
-
-                    Divider(
-                        modifier = Modifier.width(24.dp),
-                        thickness = 1.dp,
-                        color = Color.Gray
-                    )
-                }
-
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Inicia sesión con",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        MaterialTheme.colorScheme.primary
-                    ),
-                    textAlign = TextAlign.Center
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-
-                SocialMediaButton(
-                    text = "Inicia sesión con Google",
-                    onClick = { },
-                    socialMediaColor = GMAILCOLOR
-                )
-
-             */
             }
         }
     }

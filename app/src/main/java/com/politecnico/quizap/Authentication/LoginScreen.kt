@@ -200,13 +200,13 @@ fun LoginScreen(navController: NavController) {
                                 if (message != null && token.isNotEmpty()) {
                                     Log.d("Resultado Mensaje:", result.toString())
                                     Log.d("Resultado Mensaje:", message.toString())
-                                    eMessage.value = "Iniciando Sesion..."
+                                    eMessage.value = context.getString(R.string.loginin)
                                     PreferenceHelper.setToken(context,token)
                                     Log.d("NuevoToken:", token)
-                                    if (tutorialStatus >= 6) {
-                                        navController.navigate(route = AppScreens.CategoriesScreen.route)
+                                    if (tutorialStatus >= 5) {
+                                        navController.navigate(route = AppScreens.SplashScreen.route)
                                         {
-                                            popUpTo(AppScreens.CategoriesScreen.route) {
+                                            popUpTo(AppScreens.SplashScreen.route) {
                                                 inclusive = true
                                             }
                                         }
@@ -225,12 +225,12 @@ fun LoginScreen(navController: NavController) {
                                 } else {
                                     Log.d("Resultado Error:", result.toString())
                                     Log.d("Resultado Error:", message.toString())
-                                    eMessage.value = "Comprueba que tienes conexion a internet"
+                                    eMessage.value = context.getString(R.string.noWifi)
                                 }
                             } catch (e: Exception) {
                                 Log.d("Resultado Error:", result.toString())
                                 Log.d("Resultado Error:", message.toString())
-                                eMessage.value = "Comprueba que tienes conexion a internet"
+                                eMessage.value = context.getString(R.string.noWifi)
                             }
                         }
 

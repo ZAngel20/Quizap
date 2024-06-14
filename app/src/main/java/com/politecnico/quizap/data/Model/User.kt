@@ -9,6 +9,14 @@ data class User(
     val type: String,
     val userName: String
 )
+data class UserName(
+    val userName: String
+)
+data class UserPass(
+    val email: String,
+    val token: String,
+    val newPasswd: String
+)
 data class UserDto(
     val userName: String,
     val email: String,

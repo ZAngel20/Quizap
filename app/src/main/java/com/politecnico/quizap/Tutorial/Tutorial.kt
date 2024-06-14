@@ -48,7 +48,7 @@ fun TutoScreen(modifier: Modifier = Modifier, navController: NavController) {
     val context = LocalContext.current
     var tutorialStatus by remember { mutableStateOf(PreferenceHelper.getTutorialStatus(context)) }
     var tutorial by remember { mutableStateOf(1) }
-    if (tutorialStatus == 7) {
+    if (tutorialStatus == 6) {
         navController.navigate(route = AppScreens.CategoriesScreen.route)
     } else {
         Column(
@@ -104,14 +104,8 @@ fun TutoScreen(modifier: Modifier = Modifier, navController: NavController) {
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 50.dp)
                     ) {
-                        if (tutorial == 6) {
-                            Button(
-                                onClick = {
+                        if (tutorial == 10) {
                                     navController.navigate(route = AppScreens.CategoriesScreen.route)
-                                }
-                            ) {
-                                Text(text = stringResource(id = R.string.play))
-                            }
                         } else {
                             FloatingActionButton(
                                 onClick = {
@@ -131,11 +125,15 @@ fun TutoScreen(modifier: Modifier = Modifier, navController: NavController) {
                             if (tutorial == 5) {
                                 Button(
                                     onClick = {
-                                        tutorial++
                                         PreferenceHelper.setTutorialStatus(context, tutorial)
+                                        navController.navigate(AppScreens.CategoriesScreen.route) {
+                                            popUpTo(AppScreens.CategoriesScreen.route) {
+                                                inclusive = true
+                                            }
+                                        }
                                     }
                                 ) {
-                                    Text(text = stringResource(id = R.string.howtoplay))
+                                    Text(text = stringResource(id = R.string.play))
                                 }
                             }
                             if (tutorial < 5) {
@@ -168,7 +166,6 @@ fun getResourceIdForTutorialTitle(tutorial: Int): Int {
         3 -> R.string.tutorial_3_title
         4 -> R.string.tutorial_4_title
         5 -> R.string.tutorial_5_title
-        6 -> R.string.tutorial_6_title
         else -> throw IllegalArgumentException("No hay título definido para el tutorial $tutorial")
     }
 }
@@ -181,7 +178,6 @@ fun getResourceIdForTutorialContent(tutorial: Int): Int {
         3 -> R.string.tutorial_3_content
         4 -> R.string.tutorial_4_content
         5 -> R.string.tutorial_5_content
-        6 -> R.string.tutorial_6_content
         else -> throw IllegalArgumentException("No hay contenido definido para el tutorial $tutorial")
     }
 }
@@ -193,7 +189,6 @@ fun getResourceIdForTutorialEnd(tutorial: Int): Int {
         3 -> R.string.tutorial_3_end
         4 -> R.string.tutorial_4_end
         5 -> R.string.tutorial_5_end
-        6 -> R.string.tutorial_6_end
         else -> throw IllegalArgumentException("No hay final definido para el tutorial $tutorial")
     }
 }
