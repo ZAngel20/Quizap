@@ -132,13 +132,8 @@ fun LevelScreen(modifier: Modifier = Modifier, navController: NavController) {
                                             Log.d("Resultado Malo:",result.toString())
                                             listaAnswer = emptyList()
                                         }
-                                        completeQuestionsList.add(Question(question.id,question.idAnswer,question.text,question.index,listaAnswer))
-                                        questionViewModel.shuffleAnswers()
-                                        questionViewModel.shuffleAnswers()
-                                        questionViewModel.shuffleAnswers()
-                                        questionViewModel.shuffleAnswers()
+                                        completeQuestionsList.add(Question(question.id,question.idAnswer,question.text,question.index,listaAnswer.shuffled()))
                                     }
-
                                     questionViewModel.setQuestions(completeQuestionsList)
                                     navController.navigate("question_screen/${level.id}")
                                 }
@@ -146,8 +141,8 @@ fun LevelScreen(modifier: Modifier = Modifier, navController: NavController) {
                         }
                     }
                 }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
+        }
+        Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
                     navController.navigate(AppScreens.CategoriesScreen.route) {

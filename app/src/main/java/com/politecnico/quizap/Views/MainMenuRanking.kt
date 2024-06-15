@@ -1,16 +1,18 @@
 package com.politecnico.quizap.Views
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,10 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.politecnico.quizap.R
 import com.politecnico.quizap.ViewModel.RankingScreenViewModel
 import com.politecnico.quizap.data.Model.Ranking
 import com.politecnico.quizap.ui.theme.QuizapTheme
@@ -51,62 +57,65 @@ fun RankingScreen(modifier: Modifier = Modifier, navController: NavController) {
                 .fillMaxWidth()
                 .weight(1f)
                 .background(brush),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.TopCenter
         ) {
             val rankingScreenViewModel = RankingScreenViewModel.getInstance()
             val viewModel = remember { rankingScreenViewModel}
             val rankings by viewModel.listRanking.observeAsState(initial = emptyList())
             rankingScreenViewModel.setRanking(context)
-            RankingList(rankings)
+            //RankingList(rankings)
+            LazyColumn {
+                items(rankings) { ranking ->
+                    RankingRow(ranking, rankings.indexOf(ranking) + 1)
+                }
             }
-            BottomNavigation(modifier = modifier, navController = navController, selectedTab = 1)
+            }
+            BottomNavigation(modifier = modifier, navController = navController, selectedTab = 0)
 
         }
     }
-@Composable
-fun RankingList(
-    rankings: List<Ranking>
-) {
-    LazyColumn {
-        items(rankings) {ranking ->
-            RankingItem(
-                position = rankings.indexOf(ranking) + 1,
-                userName = ranking.user.userName,
-                score = ranking.score
-            )
-        }
 
-    }
-}
 @Composable
-fun RankingItem(
-    position: Int,
-    userName: String,
-    score: Int
-) {
+fun RankingRow(rankingItem: Ranking, index:Int) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .background(
-                color = Color.White,
-                shape = RoundedCornerShape(16.dp)
-            )
+            .height(100.dp)
+            .padding(2.dp)
+            .background(Color(0xFF27B1CA).copy(0.15f)),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
+
+        Column (verticalArrangement = Arrangement.Center,horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.weight(0.5f)) {
+            if (index == 1) {
+                Image(painter = painterResource(R.drawable.crown), contentDescription = "Corona",Modifier.width(40.dp).padding(start = 5.dp) )
+            }
+            Text(
+                text = "${index}",
+                modifier = Modifier.padding(start = 5.dp),
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.displaySmall
+            )
+
+        }
         Text(
-            text = position.toString(),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(end = 16.dp)
-        )
-        Text(
-            text = userName,
+            text = rankingItem.user.userName,
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleLarge
         )
-        Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = score.toString(),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(start = 16.dp)
+            text = "${rankingItem.score}",
+            modifier = Modifier.weight(0.8f).padding(end = 10.dp),
+            textAlign = TextAlign.End,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.titleLarge
         )
     }
 }

@@ -77,4 +77,6 @@
     <string name="repeat">Repeat</string>
     <string name="youScore">Your score is:</string>
     <string name="wantExit">¿Quit?</string>
+    <string name="correct">"You answered correctly "</string>
+    <string name="of">" of "</string>
 </resources>

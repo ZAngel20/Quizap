@@ -576,7 +576,14 @@ fun ResultDialog(
                     ) {
                         Text(stringResource(id = R.string.exit))
                     }
+
                 }
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.correct) +"$aciertos" + stringResource(id = R.string.of) + "$totalQuestions",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = Color.White,
+                    textAlign= TextAlign.Center)
             }
         }
     }

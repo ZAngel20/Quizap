@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.politecnico.quizap.data.Model.API.MiAPI
 import com.politecnico.quizap.data.Model.Services.PreferenceHelper
+import com.squareup.moshi.Moshi
 
 class GameRepository(
     private val api: MiAPI
@@ -57,6 +58,10 @@ class GameRepository(
         try {
             val codeToken = "Bearer " + token
             Log.d("AntesLlamada:", codeToken)
+            val moshi = Moshi.Builder().build()
+            val adapter = moshi.adapter(EvaluateLevel::class.java) // reemplaza MiObjeto con tu clase de datos
+            val json = adapter.toJson(evaluateLevel)
+            Log.d("Json de Prueba", json)
             val response = api.evaluateLevel(codeToken,evaluateLevel)
             return Result.success(response)
         } catch (e : Exception) {

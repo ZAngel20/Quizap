@@ -27,7 +27,7 @@ import retrofit2.http.Path
 
 interface MiAPI {
     companion object {
-        val instance = Retrofit.Builder().baseUrl("https://pruebaparaangel123123.publicvm.com:2001/")
+        val instance = Retrofit.Builder().baseUrl("https://api.quizzap.line.pm:2001/")
             .addConverterFactory(MoshiConverterFactory.create()).client(
             OkHttpClient.Builder().build())
             .build().create(MiAPI::class.java)
@@ -60,7 +60,7 @@ interface MiAPI {
     suspend fun getAnswers(@Header("Authorization") token: String, @Path("idQuestion") idQuestion : Int): List<Answer>
     @GET("/answer/correct/{idQuestion}")
     suspend fun getCorrectAnswer(@Header("Authorization") token: String, @Path("idQuestion") idQuestion : Int): Answer
-    @GET("/level/evaluateLevel")
+    @POST("/level/evaluateLevel")
     suspend fun evaluateLevel(@Header("Authorization") token: String, @Body evaluateLevel : EvaluateLevel): Int
     @GET("/ranking")
     suspend fun getRanking(@Header("Authorization") token: String): List<Ranking>

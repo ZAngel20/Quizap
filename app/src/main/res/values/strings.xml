@@ -80,4 +80,6 @@
     <string name="repeat">Repetir</string>
     <string name="youScore">Tu puntaje es:</string>
     <string name="wantExit">¿Salir?</string>
+    <string name="correct">"Has Acertado "</string>
+    <string name="of">de</string>
 </resources>
