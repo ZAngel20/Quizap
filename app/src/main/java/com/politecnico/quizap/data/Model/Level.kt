@@ -6,6 +6,10 @@ data class Level(
     val questions: Int,
     val name: String
 )
+data class EvaluateLevel(
+    val idLevel :Int,
+    val questions : List<ResQuestion>
+)
 data class LevelDto(
     val id: Int
 )

@@ -52,5 +52,40 @@ class GameRepository(
             return Result.failure(e)
         }
     }
+    suspend fun evaluateLevel(context : Context,evaluateLevel: EvaluateLevel): Result<Int> {
+        val token = PreferenceHelper.getToken(context)
+        try {
+            val codeToken = "Bearer " + token
+            Log.d("AntesLlamada:", codeToken)
+            val response = api.evaluateLevel(codeToken,evaluateLevel)
+            return Result.success(response)
+        } catch (e : Exception) {
+            return Result.failure(e)
+        }
+    }
+
+    suspend fun getRanking(context : Context): Result<List<Ranking>> {
+        val token = PreferenceHelper.getToken(context)
+        try {
+            val codeToken = "Bearer " + token
+            Log.d("AntesLlamada:", codeToken)
+            val response = api.getRanking(codeToken)
+            return Result.success(response)
+        } catch (e : Exception) {
+            return Result.failure(e)
+        }
+    }
+
+    suspend fun getScore(context : Context): Result<Int> {
+        val token = PreferenceHelper.getToken(context)
+        try {
+            val codeToken = "Bearer " + token
+            Log.d("AntesLlamada:", codeToken)
+            val response = api.getScore(codeToken)
+            return Result.success(response)
+        } catch (e : Exception) {
+            return Result.failure(e)
+        }
+    }
 }
 

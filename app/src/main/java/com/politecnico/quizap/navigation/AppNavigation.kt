@@ -21,6 +21,7 @@ import com.politecnico.quizap.Views.HomeScreen
 import com.politecnico.quizap.Views.LevelScreen
 import com.politecnico.quizap.Views.ProfileScreen
 import com.politecnico.quizap.Views.QuestionScreen
+import com.politecnico.quizap.Views.RankingScreen
 import com.politecnico.quizap.Views.SplashScreen
 
 
@@ -68,11 +69,20 @@ fun AppNavigation() {
                 val email = it.arguments?.getString("email") ?: ""
                 VerificacionTokenScreen(navController = navController, email = email)
             }
+            composable(route = "question_screen/{id}",
+                arguments = listOf(
+                    navArgument("id") {
+                        type = NavType.IntType
+                    }
+                )) {
+                val id = it.arguments?.getInt("id") ?: 0
+                QuestionScreen(navController = navController, id = id)
+            }
             composable(route = AppScreens.LevelScreen.route) {
                 LevelScreen(navController = navController)
             }
-        composable(route = AppScreens.QuestionScreen.route) {
-            QuestionScreen(navController = navController)
-        }
+            composable(route = AppScreens.RankingScreen.route) {
+                RankingScreen(navController = navController)
+            }
         }
     }

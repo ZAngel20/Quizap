@@ -133,10 +133,15 @@ fun LevelScreen(modifier: Modifier = Modifier, navController: NavController) {
                                             listaAnswer = emptyList()
                                         }
                                         completeQuestionsList.add(Question(question.id,question.idAnswer,question.text,question.index,listaAnswer))
+                                        questionViewModel.shuffleAnswers()
+                                        questionViewModel.shuffleAnswers()
+                                        questionViewModel.shuffleAnswers()
+                                        questionViewModel.shuffleAnswers()
                                     }
 
                                     questionViewModel.setQuestions(completeQuestionsList)
-                                    navController.navigate(AppScreens.QuestionScreen.route)}
+                                    navController.navigate("question_screen/${level.id}")
+                                }
                             })
                         }
                     }

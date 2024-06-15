@@ -1,28 +1,46 @@
 package com.politecnico.quizap.ViewModel
 
+import android.content.Context
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import com.politecnico.quizap.data.Model.API.MiAPI
+import com.politecnico.quizap.data.Model.GameRepository
+import com.politecnico.quizap.data.Model.Ranking
 import kotlinx.coroutines.launch
 
-class RankingScreenViewModel : ViewModel() {
-    private val _username = MutableLiveData<String>()
-    private val _score = MutableLiveData<Int>()
-    private val _id= MutableLiveData<Int>()
+class RankingScreenViewModel private constructor() : ViewModel() {
+    private val _listRanking = MutableLiveData<List<Ranking>>()
+    val listRanking: LiveData<List<Ranking>> = _listRanking
 
-    init {
-        loadRanking()
+
+    fun setRanking(context: Context) {
+        val gameRepository: GameRepository by lazy { GameRepository(MiAPI.instance) }
+            viewModelScope.launch {
+                val result: Result<List<Ranking>> = gameRepository.getRanking(context)
+                try {
+                    Log.d("Resultado Bueno:", result.toString())
+                    val listRankings: List<Ranking>? = result.getOrNull()
+                    if (listRankings != null) {
+                        _listRanking.value = listRankings!!
+                    }
+                } catch (e: Exception) {
+                    Log.d("Resultado Malo:", result.toString())
+                    _listRanking.value = emptyList<Ranking>()
+
+                }
+            }
     }
+    companion object {
+        private var instance: RankingScreenViewModel? = null
 
-    private fun loadRanking() {
-        // Fake API call to get list of categories
-
-
-        // Simulate API call delay
-        viewModelScope.launch {
-            delay(1000)
-        //  _levels.value = categories
+        fun getInstance(): RankingScreenViewModel {
+            if (instance == null) {
+                instance = RankingScreenViewModel()
+            }
+            return instance!!
         }
     }
 }

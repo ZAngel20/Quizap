@@ -1,4 +1,7 @@
 package com.politecnico.quizap.data.Model
 
-class Ranking {
-}
+data class Ranking (
+    val idUser: String,
+    val score: Int,
+    val user: UserName
+)

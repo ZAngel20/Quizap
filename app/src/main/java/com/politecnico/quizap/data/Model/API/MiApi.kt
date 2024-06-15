@@ -2,8 +2,10 @@ package com.politecnico.quizap.data.Model.API
 
 import com.politecnico.quizap.data.Model.Answer
 import com.politecnico.quizap.data.Model.Category
+import com.politecnico.quizap.data.Model.EvaluateLevel
 import com.politecnico.quizap.data.Model.Level
 import com.politecnico.quizap.data.Model.PreQuestion
+import com.politecnico.quizap.data.Model.Ranking
 import com.politecnico.quizap.data.Model.User
 import com.politecnico.quizap.data.Model.UserAccessToken
 import com.politecnico.quizap.data.Model.UserDto
@@ -58,4 +60,10 @@ interface MiAPI {
     suspend fun getAnswers(@Header("Authorization") token: String, @Path("idQuestion") idQuestion : Int): List<Answer>
     @GET("/answer/correct/{idQuestion}")
     suspend fun getCorrectAnswer(@Header("Authorization") token: String, @Path("idQuestion") idQuestion : Int): Answer
+    @GET("/level/evaluateLevel")
+    suspend fun evaluateLevel(@Header("Authorization") token: String, @Body evaluateLevel : EvaluateLevel): Int
+    @GET("/ranking")
+    suspend fun getRanking(@Header("Authorization") token: String): List<Ranking>
+    @GET("/ranking/score")
+    suspend fun getScore(@Header("Authorization") token: String): Int
 }

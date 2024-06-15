@@ -1,5 +1,6 @@
 package com.politecnico.quizap.Views
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,6 +43,7 @@ import com.politecnico.quizap.navigation.AppScreens
 import com.politecnico.quizap.ui.theme.QuizapTheme
 
 
+
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController) {
     val colors = listOf(Color(0xFF127489), Color(0xFF122689))
@@ -64,10 +66,13 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
             val uservM = remember { userViewModel }
             val profileviewModel = remember { profileScreenViewModel }
             profileScreenViewModel.setProfile(Profile(uservM.userName.value?: "-",uservM.email.value?: "-"))
+            profileviewModel.updateScore(context)
+            profileviewModel.updateRanking(context, uservM.id.value ?: "")
             val name by profileviewModel.username.observeAsState(initial = "-")
             val email by profileviewModel.email.observeAsState(initial = "-")
             val score by profileviewModel.score.observeAsState(initial = 0)
             val ranking by profileviewModel.ranking.observeAsState(initial = null)
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -75,7 +80,8 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                     .padding(horizontal = 16.dp, vertical = 30.dp),
                 verticalArrangement = Arrangement.spacedBy(25.dp)
             ) {
-                // Nombre de usuario y correo electrónico
+
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
@@ -168,9 +174,10 @@ fun ProfileScreen(modifier: Modifier = Modifier,navController: NavHostController
                         style = MaterialTheme.typography.titleLarge,
                         color = Color.White
                     )
+                    Log.d("Ranking", ranking.toString())
                     Text(
                         text = if (ranking != null) "${ranking}" else stringResource(id = R.string.noRanking),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleLarge,
                         color = Color.White
                     )
                 }

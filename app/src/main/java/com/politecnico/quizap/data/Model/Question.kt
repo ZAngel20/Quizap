@@ -14,6 +14,11 @@ data class PreQuestion(
     val text: String,
     val index: Int,
 )
+data class ResQuestion(
+    val idQuestion : Int,
+    val idAnswer: Int,
+)
+
 data class QuestionDto(
     val id: Int
 )

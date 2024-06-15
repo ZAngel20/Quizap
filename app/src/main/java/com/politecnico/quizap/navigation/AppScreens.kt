@@ -11,5 +11,6 @@ sealed class AppScreens(val route: String) {
     object ProfileScreen : AppScreens("profile_screen")
     object CategoriesScreen : AppScreens("category_screen")
     object LevelScreen : AppScreens ("level_screen")
-    object QuestionScreen : AppScreens ("question_screen")
+    object RankingScreen : AppScreens("ranking_screen")
+
 }

@@ -33,34 +33,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.politecnico.quizap.R
 import com.politecnico.quizap.ViewModel.QuestionViewModel
+import com.politecnico.quizap.data.Model.API.MiAPI
 import com.politecnico.quizap.data.Model.Answer
+import com.politecnico.quizap.data.Model.EvaluateLevel
+import com.politecnico.quizap.data.Model.GameRepository
+import com.politecnico.quizap.data.Model.ResQuestion
 import com.politecnico.quizap.navigation.AppScreens
-import com.politecnico.quizap.ui.theme.QuizapTheme
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.ceil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController, id : Int) {
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var selectedAnswerId by remember { mutableStateOf(-1) }
     var correctAnswerId by remember { mutableStateOf(-1) }
@@ -78,6 +83,10 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
     val brush = Brush.verticalGradient(colors)
     var showMenu by remember { mutableStateOf(false) }
     var showResults by remember { mutableStateOf(false) }
+    val listResQuestion = remember { mutableStateListOf<ResQuestion>() }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
     //var shuffledAnswers = questions[currentQuestionIndex].answers.shuffled()
 
     Column(
@@ -159,8 +168,9 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                                 Button(
                                     onClick = {
                                         questionViewModel.shuffleAnswers()
-                                        navController.navigate(AppScreens.QuestionScreen.route) {
-                                        popUpTo(AppScreens.QuestionScreen.route) {
+
+                                        navController.navigate("question_screen/${id}") {
+                                        popUpTo("question_screen/${id}") {
                                             inclusive = true
                                         }
                                     } },
@@ -236,8 +246,8 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                     },
                     onRepeat = {
                         questionViewModel.shuffleAnswers()
-                        navController.navigate(AppScreens.QuestionScreen.route) {
-                            popUpTo(AppScreens.QuestionScreen.route) {
+                        navController.navigate("question_screen/${id}") {
+                            popUpTo("question_screen/${id}") {
                                 inclusive = true
                             }
                         }
@@ -282,9 +292,8 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                             selectedAnswerId = questions[currentQuestionIndex].answers[0].id
                             correctAnswerId = questions[currentQuestionIndex].idAnswer
                             if (selectedAnswerId == correctAnswerId) {
-                                score += 100
                                 aciertos++
-                            } else { score -= 10}
+                            }
                             isButton1Enabled = false
                             isButton2Enabled = false
                             isButton3Enabled = false
@@ -304,9 +313,8 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                             selectedAnswerId = questions[currentQuestionIndex].answers[1].id
                             correctAnswerId = questions[currentQuestionIndex].idAnswer
                             if (selectedAnswerId == correctAnswerId) {
-                                score += 100
                                 aciertos++
-                            } else { score -= 10}
+                            }
                             isButton1Enabled = false
                             isButton2Enabled = false
                             isButton3Enabled = false
@@ -333,9 +341,8 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                             selectedAnswerId = questions[currentQuestionIndex].answers[2].id
                             correctAnswerId = questions[currentQuestionIndex].idAnswer
                             if (selectedAnswerId == correctAnswerId) {
-                                score += 100
                                 aciertos++
-                            } else { score -= 10}
+                            }
                             isButton1Enabled = false
                             isButton2Enabled = false
                             isButton3Enabled = false
@@ -355,9 +362,8 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                             selectedAnswerId = questions[currentQuestionIndex].answers[3].id
                             correctAnswerId = questions[currentQuestionIndex].idAnswer
                             if (selectedAnswerId == correctAnswerId) {
-                                score += 100
                                 aciertos++
-                            } else { score -= 10}
+                            }
                             isButton1Enabled = false
                             isButton2Enabled = false
                             isButton3Enabled = false
@@ -373,6 +379,12 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                     delay(1500)
                     showNextQuestion = false
                     if (currentQuestionIndex < questions.size - 1) {
+                        listResQuestion.add(
+                            ResQuestion(
+                                questions[currentQuestionIndex].id,
+                                selectedAnswerId
+                            )
+                        )
                         currentQuestionIndex++
                         isButton1Enabled = true
                         isButton2Enabled = true
@@ -381,6 +393,31 @@ fun QuestionScreen(modifier: Modifier = Modifier, navController: NavController) 
                         selectedAnswerId = -1
                         correctAnswerId = -1
                     } else {
+                        listResQuestion.add(
+                            ResQuestion(
+                                questions[currentQuestionIndex].id,
+                                selectedAnswerId
+                            )
+                        )
+                        val gameRepository: GameRepository by lazy { GameRepository(MiAPI.instance) }
+                            scope.launch {
+                                val result : Result<Int> = gameRepository.evaluateLevel(context, EvaluateLevel(id,listResQuestion))
+                                try {
+
+                                     if (result.isSuccess) {
+                                         score = result.getOrDefault(0)
+                                     }
+                                    if (score != 0) {
+                                        Log.d("Resultado:",result.toString())
+
+                                    } else {
+                                        Log.d("Resultado:",result.toString())
+
+                                    }
+                                } catch (e: Exception) {
+                                    Log.d("Resultado:",result.toString())
+                                }
+                            }
                         Log.d("Puntuacion:", score.toString())
                         showResults = true
                     }
@@ -542,13 +579,5 @@ fun ResultDialog(
                 }
             }
         }
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun QuestionScreenPreview() {
-    val navController = rememberNavController()
-    QuizapTheme {
-        QuestionScreen(navController = navController)
     }
 }

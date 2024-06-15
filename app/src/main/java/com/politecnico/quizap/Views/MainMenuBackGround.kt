@@ -130,7 +130,7 @@ fun BottomNavigation(modifier: Modifier = Modifier, navController: NavController
             },
             selected = selectedTab == 0,
             onClick = {
-                navController.navigate(route = AppScreens.MainScreen.route)
+                navController.navigate(route = AppScreens.RankingScreen.route)
             }
         )
         NavigationBarItem(

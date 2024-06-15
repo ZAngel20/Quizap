@@ -11,6 +11,7 @@ class UserViewModel private constructor() : ViewModel() {
     private val _email = MutableLiveData<String>()
     private val _userName = MutableLiveData<String>()
 
+
     val id: LiveData<String> = _id
     val email: LiveData<String> = _email
     val userName: LiveData<String> = _userName
